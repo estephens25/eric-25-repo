@@ -1,0 +1,18 @@
+from netmiko import ConnectHandler
+
+cisco_asa = {
+    'device_type': 'cisco_asa',
+	'ip': 'x.x.x.x',
+	'username': 'xxxx',
+	'password': 'xxxx',
+	'secret': 'xxxx',
+	'verbose': False,
+}
+
+net_connect=ConnectHandler(**cisco_asa)
+output = net_connect.send_command('show conn count')
+print('Connection Count:')
+print output
+output = net_connect.send_command('show xlate count')
+print('XLATE Count:')
+print output
