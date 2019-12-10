@@ -1,0 +1,25 @@
+from netmiko import ConnectHandler
+import datetime
+
+currentDT = datetime.datetime.now()
+
+cisco_asa = {
+    'device_type': 'cisco_asa',
+	'ip': 'xxxx',
+	'username': 'xxxx',
+	'password': 'xxxx',
+	'secret': 'xxxx',
+	'verbose': False,
+}
+
+file = open("asashowconn.txt", "a")
+file.write (currentDT.strftime("\n%Y-%m-%d %H:%M:%S"))
+net_connect=ConnectHandler(**cisco_asa)
+output = net_connect.send_command('show conn count')
+file = open("asashowconn.txt", "a")
+file.write('\nConnection Count:')
+file.write(output)
+output = net_connect.send_command('show xlate count')
+file = open("asashowconn.txt", "a")
+file.write('XLATE Count:')
+file.write(output)
