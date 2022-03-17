@@ -1,0 +1,21 @@
+from netmiko import ConnectHandler
+import datetime
+import pexpect
+ 
+currentDT = datetime.datetime.now()
+ 
+cisco_asa = {
+    'device_type': 'cisco_asa',
+                'ip': '##.##.##.##',
+                'username': '#######',
+                'password': '#######',
+                'secret': '#######',
+                'verbose': False,
+}
+net_connect=ConnectHandler(**cisco_asa)
+net_connect.send_command('connect fxos admin', expect_string=r"firepower-2110#")
+net_connect.send_command('scope fabric-interconnect a', expect_string=r"firepower-2110 /fabric-interconnect #")
+output = net_connect.send_command('show storage')
+print(output)
+net_connect.send_command('top', expect_string=r"firepower-2110#" )
+net_connect.send_command('exit', expect_string=r"asa#")
